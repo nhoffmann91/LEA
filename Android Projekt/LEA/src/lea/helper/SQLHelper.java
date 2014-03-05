@@ -17,6 +17,8 @@ public class SQLHelper {
 			sqlHelper = new SQLHelper();
 		return sqlHelper;
 	}
+	
+	private MySqlAdapter mySqlAdapter = new MySqlAdapter();
 
 	// Field of the pupil id
 	private int pupilId;
@@ -37,9 +39,10 @@ public class SQLHelper {
 						+ "vname=" + names[1] + " AND nname=" + names[0] + ";";
 
 				ResultSet result = this.mySqlAdapter.returnQuery(query);
+				
 				if (result != null) {
 					try {
-						if (result.getString("passwort") == password) {
+						if (result.getString("passwort").equals(password)) {
 							// Set the get the id of the pupil
 							this.pupilId = result.getInt("ID");
 						} else {
@@ -49,7 +52,7 @@ public class SQLHelper {
 						throw e;
 					}
 				} else {
-					throw new Exception("Username is falsch!");
+					throw new Exception("Username ist falsch!");
 				}
 			} else {
 				throw new Exception("Zu keiner Datenbank verbunden!");
@@ -78,9 +81,7 @@ public class SQLHelper {
 	public void setSubjectId(int subjectId) {
 		this.subjectId = subjectId;
 	}
-
-	private MySqlAdapter mySqlAdapter = new MySqlAdapter();
-
+	
 	// Method to get all teachers by a pupil id
 	public ResultSet getAllTeachersOfTheCurrentPupil() {
 		if (this.mySqlAdapter.isConnected()) {
@@ -95,7 +96,7 @@ public class SQLHelper {
 		}
 	}
 
-	// Method to get all teachers by a teacher id and a pupil id
+	// Method to get all subjects by a teacher id and a pupil id
 	public ResultSet getAllSubjectsByCurrentPupilAndTeacherId(int teacherId) {
 		if (this.mySqlAdapter.isConnected()) {
 			String query = "select distinct f.id, f.kurz_bez from t_ergebnis "
@@ -109,5 +110,16 @@ public class SQLHelper {
 			return null;
 		}
 	}
+	
+	public ResultSet getTopTenTeacher(){
+		if(this.mySqlAdapter.isConnected()){
+			String query = "";
+			return this.mySqlAdapter.returnQuery(query);
+		}
+		else{
+			return null;
+		}
+	}
 
+	//public ResultSet 
 }
