@@ -1,0 +1,141 @@
+create database db_bewertung; 
+use db_bewertung; 
+
+## Queries
+############################################## T_LEHRER ################################################################
+ CREATE TABLE t_lehrer (
+		id INT NOT NULL AUTO_INCREMENT,
+		vname VARCHAR(45) NOT NULL,
+		nname VARCHAR(45) NOT NULL,
+		PRIMARY KEY (id));
+
+
+	INSERT INTO t_lehrer(vname,nname)VALUES('Michael','Eiermann');
+	INSERT INTO t_lehrer(vname,nname)VALUES('Armin', 'Wittstock');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Silvia', 'Heigl');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Albrecht', 'Pfleiderer');
+  	INSERT INTO t_lehrer(vname,nname)VALUES('Rainer', 'Pröbstel');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Joachim', 'Wiedorn');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Jan-Peter', 'Von Sivers');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Maria', 'Hilz');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Agnes', 'Heeren');
+   	INSERT INTO t_lehrer(vname,nname)VALUES('Michaela', 'Plößl');
+
+############################################## T_SCHUELER ################################################################
+ CREATE TABLE t_schueler (
+		id INT NOT NULL AUTO_INCREMENT,
+		vname VARCHAR(45) NOT NULL,
+		nname VARCHAR(45) NOT NULL,
+		passwort VARCHAR(8) NOT NULL,
+		PRIMARY KEY (id));
+
+	INSERT INTO t_schueler(vname, nname, passwort)VALUES('Alice-Yvonne', 'Albrich', '12345678');
+	INSERT INTO t_schueler(vname,nname,passwort)VALUES('Nick', 'Hoffmann', '87654321');
+
+############################################## T_FACH ################################################################
+ CREATE TABLE t_fach (
+		id INT NOT NULL AUTO_INCREMENT,
+		kuerzel VARCHAR(45) NOT NULL,
+		bez VARCHAR(45) NOT NULL,
+		PRIMARY KEY (id));
+
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('AEP', 'Anwendungsentwicklung und Progammierung');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('ITS', 'Informationstechnologische Systeme');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('D', 'Deutsch');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('E', 'Englisch');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('SP', 'Sport');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('SK', 'Sozialkunde');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('REL', 'Religion');
+	INSERT INTO t_fach (kuerzel, bez) VALUES ('BWP', 'Betriebswirtschaftliche Prozesse');
+
+
+############################################## T_FRAGENKATALOG ################################################################
+CREATE TABLE t_fragenkatalog (
+		id INT NOT NULL AUTO_INCREMENT,
+		frage VARCHAR(45) NOT NULL,
+		PRIMARY KEY (id));
+
+	INSERT INTO t_fragenkatalog (frage) VALUES ('Wie gut wurde ihrer Meinung nach der Stoff vermittelt?');
+	INSERT INTO t_fragenkatalog (frage) VALUES ('Fanden sie den Stoff Zeitgemäß?');
+	INSERT INTO t_fragenkatalog (frage) VALUES ('War der Unterricht abwechslungsreich?');
+	INSERT INTO t_fragenkatalog (frage) VALUES ('Wurden Fragen zufiedenstellend beantwortet?');
+
+############################################## T_KLASSE ################################################################
+CREATE TABLE t_klasse (
+		id INT NOT NULL AUTO_INCREMENT,
+		jahrgang INT NOT NULL,
+		fachbereich VARCHAR(5) NOT NULL,
+		gruppe CHAR NOT NULL,
+		PRIMARY KEY (id));
+
+
+	INSERT INTO t_klasse (jahrgang, fachbereich, gruppe) VALUES (12, 'IT', 'a');
+	INSERT INTO t_klasse (jahrgang, fachbereich, gruppe) VALUES (12, 'IT', 'b');
+
+############################################## T_ERGEBNIS ################################################################
+ CREATE TABLE t_ergebnis (
+	id INT NOT NULL AUTO_INCREMENT,
+	fk_fach INT NOT NULL,
+	fk_fragenkatalog INT NOT NULL,
+	fk_klasse INT NOT NULL,
+	fk_lehrer INT NOT NULL,
+	fk_schueler INT NOT NULL,
+	ergebnis INT,
+	PRIMARY KEY (id),
+	INDEX fk_schueler_idx (fk_schueler ASC),
+	INDEX fk_lehrer_idx (fk_lehrer ASC),
+	INDEX fk_fragenkatalog_idx (fk_fragenkatalog ASC),
+	INDEX fk_fach_idx (fk_fach ASC),
+	INDEX fk_klasse_idx (fk_klasse ASC),
+	CONSTRAINT fk_schueler  FOREIGN KEY (fk_schueler)
+    REFERENCES t_schueler(id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+	CONSTRAINT fk_lehrer    FOREIGN KEY (fk_lehrer)
+    REFERENCES t_lehrer (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+	CONSTRAINT fk_fragenkatalog
+    FOREIGN KEY (fk_fragenkatalog)
+    REFERENCES t_fragenkatalog (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+	CONSTRAINT fk_fach
+    FOREIGN KEY (fk_fach)
+    REFERENCES t_fach (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+	CONSTRAINT fk_klasse
+    FOREIGN KEY (fk_klasse)
+    REFERENCES t_klasse (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,1,1,1,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,2,1,1,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,3,1,1,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,3,1,1,1);
+
+
+## select schueler für den login vergleich 
+#select id, vname, nname, passwort from t_schueler; 
+
+## gibt alle Lehrer zurück die dieser Schühler hat (WHERE PART Schüler ID) 
+select distinct l.id, l.vname, l.nname 
+from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id where s.id = 1; 
+
+## gibt alle Fächer aus die dieser Leher bei einem gewissen Schüler unterrichtet
+#select distinct f.id, f.kurz_bez from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id join t_fach f on fk_fach = f.id where s.id = 1 and l.id=1; 
+
+## select für die fagen die gestellt werden. 
+#select distinct f.id, f.frage from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id join t_fach fach on fk_fach = fach.id join t_fragenkatalog f on f.id = fk_fragenkatalog where s.id = 1 and l.id = 4 and fach.id = 2; 
+
+## update ergebnis 
+#update t_ergebnis set ergebnis = 2 
+#where fk_fach= 1 
+#and fk_fragenkatalog= 4
+#and fk_klasse = 2 
+#and fk_lehrer = 
+#and fk_schueler = 1; 
+

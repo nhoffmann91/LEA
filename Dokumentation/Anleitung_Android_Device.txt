@@ -1,0 +1,6 @@
+WICHTIG ==> Der Proxy am PC sowie der Proxy am Tablet/ Handy müssen aus sein 
+
+Proxy = 192.168.15.1 Port 8080
+
+Buil Path ==> Order and Export Hacken bei der gewünschten .jar setzen
+

@@ -1,0 +1,7 @@
+netsh wlan stop hostednetwork
+ netsh wlan set hostednetwork mode=allow ssid=Wifi_Zugang key=beispiel
+ netsh wlan start hostednetwork
+
+ echo mit einer eingabe wird das Adhoc-Netz beendet
+ pause
+ #netsh wlan stop hostednetwork
