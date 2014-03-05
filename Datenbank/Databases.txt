@@ -126,7 +126,7 @@ select distinct l.id, l.vname, l.nname
 from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id where s.id = 1; 
 
 ## gibt alle Fächer aus die dieser Leher bei einem gewissen Schüler unterrichtet
-#select distinct f.id, f.kurz_bez from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id join t_fach f on fk_fach = f.id where s.id = 1 and l.id=1; 
+#select distinct f.id, f.kuerzel from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id join t_fach f on fk_fach = f.id where s.id = 1 and l.id=1; 
 
 ## select für die fagen die gestellt werden. 
 #select distinct f.id, f.frage from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id join t_fach fach on fk_fach = fach.id join t_fragenkatalog f on f.id = fk_fragenkatalog where s.id = 1 and l.id = 4 and fach.id = 2; 
