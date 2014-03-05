@@ -12,7 +12,7 @@ public class MySqlAdapter {
 	private String Username = "root";
 	private String Password = "Passwort";
 	private String Driver = "com.mysql.jdbc.Driver";
-	private String URL = "jdbc:mysql://mysql.host.net:3306/datenbank";
+	private String URL = "jdbc:mysql://localhost:3306/db_bewertung";
 	private Connection connection;
 
 	public MySqlAdapter() {

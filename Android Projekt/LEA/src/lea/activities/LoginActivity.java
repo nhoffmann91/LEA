@@ -1,6 +1,6 @@
 package lea.activities;
 
-import lea.controller.EventHandler;
+import lea.controller.OnClickHandler;
 import lea.helper.Constants;
 import android.os.Bundle;
 import android.app.Activity;
@@ -22,7 +22,7 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v == btnLogin)
-				EventHandler.getInstance().btnLoginClick(
+				OnClickHandler.getInstance().btnLoginClick(
 						editTxtUsername.getText().toString(),
 						editTxtPassword.getText().toString(),
 						(Activity) v.getContext());
@@ -36,16 +36,6 @@ public class LoginActivity extends Activity {
 
 		this.setViewControls();
 		this.addEvents();
-
-		if (!getIntent().getExtras().equals(null)) {
-			if (getIntent().getExtras().containsKey(Constants.ErrorKey)) {
-				Toast.makeText(
-						getBaseContext(),
-						this.getIntent().getExtras()
-								.getString(Constants.ErrorKey),
-						Toast.LENGTH_LONG).show();
-			}
-		}
 	}
 
 	@Override
