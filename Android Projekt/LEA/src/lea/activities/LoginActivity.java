@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	
+
 	private Button btnLogin;
 	private EditText editTxtUsername;
 	private EditText editTxtPassword;
@@ -33,14 +33,19 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
+
 		this.setViewControls();
 		this.addEvents();
 
-		if (this.getIntent().getExtras().containsKey(Constants.ErrorKey))
-			Toast.makeText(getBaseContext(),
-					this.getIntent().getExtras().getString(Constants.ErrorKey),
-					Toast.LENGTH_LONG).show();
+		if (!getIntent().getExtras().equals(null)) {
+			if (getIntent().getExtras().containsKey(Constants.ErrorKey)) {
+				Toast.makeText(
+						getBaseContext(),
+						this.getIntent().getExtras()
+								.getString(Constants.ErrorKey),
+						Toast.LENGTH_LONG).show();
+			}
+		}
 	}
 
 	@Override
@@ -49,7 +54,7 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
+
 	private void addEvents() {
 		this.btnLogin.setOnClickListener(this.onClickHandler);
 	}
