@@ -2,7 +2,6 @@ package lea.activities;
 
 import lea.controller.OnClickHandler;
 import lea.controller.OnSelectHandler;
-import lea.helper.TestData;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -54,8 +53,8 @@ public class TeacherChoiceActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teacher_choice);
 
-		this.addEvents();
 		this.setViewControls();
+		this.addEvents();
 		this.bindData();
 	}
 
@@ -72,12 +71,12 @@ public class TeacherChoiceActivity extends Activity {
 	}
 
 	private void bindData() {
-		this.spnTeacher.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, TestData
-						.getInstance().getTeacherList()));
-		this.spnSubject.setAdapter(new ArrayAdapter<String>(this,
-				android.R.layout.simple_dropdown_item_1line, TestData
-						.getInstance().getSubjectList()));
+//		this.spnTeacher.setAdapter(new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TestData
+//						.getInstance().getTeacherList()));
+//		this.spnSubject.setAdapter(new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TestData
+//						.getInstance().getSubjectList()));
 	}
 
 	@Override

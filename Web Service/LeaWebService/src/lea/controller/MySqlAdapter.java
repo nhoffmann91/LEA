@@ -3,7 +3,6 @@ package lea.controller;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
 
 //Class to adapt the MySql Database
@@ -15,70 +14,60 @@ public class MySqlAdapter {
 	private String URL = "jdbc:mysql://localhost:3306/db_bewertung";
 	private Connection connection;
 
-	public MySqlAdapter() {
-		this.connect();
-	}
-
-	public MySqlAdapter(String user, String pass) {
+	public MySqlAdapter(String user, String pass) throws Exception {
 		this.Username = user;
 		this.Password = pass;
 		this.connect();
 	}
 
-	public void close() {
+	public MySqlAdapter() {
+	}
+
+	public void close() throws Exception {
 		if (this.connection != null) {
 			try {
 				this.connection.close();
 			} catch (Exception e) {
+				throw e;
 			}
 		}
 	}
 
-	public void connect() {
+	public void connect() throws Exception {
 		try {
-			Class.forName(this.Driver);
+			Class.forName(this.Driver).newInstance();
 			this.connection = DriverManager.getConnection(this.URL,
 					this.Username, this.Password);
 		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("Error Connecting with User:" + Username
-					+ " and Password:" + Password);
+			throw e;
 		}
 	}
 
-	public boolean isConnected() {
+	public boolean isConnected() throws Exception {
 		try {
-			ResultSet rs = this.returnQuery("SELECT 1;");
-			if (rs == null) {
-				return false;
-			}
-			if (rs.next()) {
-				return true;
-			}
-			return false;
+			this.returnQuery("SELECT 1;");
+			return true;
 		} catch (Exception e) {
-			return false;
+			throw e;
 		}
 	}
 
-	public ResultSet returnQuery(String query) {
+	public ResultSet returnQuery(String query) throws Exception {
 		try {
 			Statement stmt = this.connection.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			return rs;
-		} catch (SQLException e) {
-			System.err.println(e.toString());
-			return null;
+		} catch (Exception e) {
+			throw e;
 		}
 	}
 
-	public boolean runQuery(String query) {
+	public boolean runQuery(String query) throws Exception {
 		try {
 			Statement stmt = this.connection.createStatement();
 			return stmt.execute(query);
 		} catch (Exception e) {
-			// e.printStackTrace();
-			return false;
+			throw e;
 		}
 	}
 }
