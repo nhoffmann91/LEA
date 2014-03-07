@@ -3,7 +3,6 @@ package lea.controller;
 import lea.activities.RankingActivity;
 import lea.activities.RatingActivity;
 import lea.activities.TeacherChoiceActivity;
-import lea.helper.SQLHelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.Rating;
