@@ -1,6 +1,9 @@
 package lea.controller;
 
+import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import lea.helper.SQLHelper;
 
 import android.app.Activity;
 import android.view.View;
@@ -19,6 +22,7 @@ public class OnLoadHandler {
 	}
 	
 	public ArrayList<View> getTeacherOverview(Activity context){
+		ResultSet teachers = SQLHelper.getInstance().getAllTeachersOfTheCurrentPupil();
 		
 		
 		return new ArrayList<View>();
