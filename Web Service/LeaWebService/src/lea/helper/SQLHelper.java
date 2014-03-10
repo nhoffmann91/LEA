@@ -66,7 +66,7 @@ public class SQLHelper {
 						throw e;
 					}
 				} else {
-					throw new Exception("Username or Password incorrect");
+					throw new Exception("No Data found");
 				}
 			} catch (Exception e) {
 				throw e;
