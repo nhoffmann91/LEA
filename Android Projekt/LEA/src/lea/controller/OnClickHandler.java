@@ -24,8 +24,8 @@ public class OnClickHandler {
 	// Method to handle the login button click event
 	public void btnLoginClick(String username, String password, Activity context) {
 		try {
-			// Set the pupil id
-			SQLHelper.getInstance().setPupilIdIfNotExists(username, password);
+			
+			
 			// Create new intent
 			Intent ranking = new Intent(context.getApplicationContext(),
 					RankingActivity.class);
