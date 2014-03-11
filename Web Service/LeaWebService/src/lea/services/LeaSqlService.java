@@ -1,57 +1,124 @@
 package lea.services;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.google.gson.Gson;
 
 import lea.helper.SQLHelper;
 
 @Path("/service")
 public class LeaSqlService {
-	// This method is called if TEXT_PLAIN is request
+
+	@SuppressWarnings("finally")
 	@GET
-	@Path("/getpupilid/{jsonData}")
-	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getPupilId(@PathParam(value = "jsonData") String jsonData) {
-		// String[] t = getData.fromJson(jsonData, String.class).split(",");
-		String[] t = jsonData.split(",");
+	@Path("/getpupilid/{firstname}/{lastname}/{password}")
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getPupilId(
+			@PathParam(value = "firstname") String firstname,
+			@PathParam(value = "lastname") String lastname,
+			@PathParam(value = "password") String password) {
+		Gson gson = new Gson();
+		String result = "";
+		int status = 400;
 
 		try {
-			return "" + (SQLHelper.getInstance().getPupilId(t[0], t[1], t[2]))
-					+ "";
+			int id = SQLHelper.getInstance().getPupilId(firstname, lastname,
+					password);
+			result = gson.toJson(id);
+			status = 200;
 		} catch (Exception e) {
-			return e.getMessage();
+			result = gson.toJson(e);
+		} finally {
+			return Response.status(status).entity(result).build();
 		}
 	}
 
 	@GET
 	@Path("/getallteachersbypupil/{pupilId}")
 	@Consumes(MediaType.TEXT_PLAIN)
-	@Produces(MediaType.TEXT_PLAIN)
-	public String[][] getAllTeachersByPupil(
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllTeachersByPupil(
 			@PathParam(value = "pupilId") int pupilId) throws Exception {
-		String[][] teacher = null;
-		
+		Gson gson = new Gson();
+		String result = "";
+
 		try {
-			ResultSet result = SQLHelper.getInstance().getAllTeachersByPupil(
-					pupilId);
-			teacher = new String[10][2];
-			int counter = 0;
-			while (result.next()) {
-				teacher[counter][0] = "" + result.getInt("id") + "";
-				teacher[counter][1] = result.getString("nname");
-			}
+			ResultSet resultSet = SQLHelper.getInstance()
+					.getAllTeachersByPupil(pupilId);
+			result = gson.toJson(resultSet);
 		} catch (Exception e) {
+			result = gson.toJson(e);
 		}
 
-		return teacher;
+		return result;
+	}
+
+	@GET
+	@Path("/getallsubjectsbypupilandteacher/{pupilId}/{teacherId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getAllSubjectsByPupilAndTeacher(
+			@PathParam(value = "pupilId") int pupilId,
+			@PathParam(value = "teacherId") int teacherId) throws Exception {
+		Gson gson = new Gson();
+		String result = "";
+
+		try {
+			ResultSet resultSet = SQLHelper.getInstance()
+					.getAllSubjectsByPupilAndTeacher(pupilId, teacherId);
+			result = gson.toJson(resultSet);
+		} catch (Exception e) {
+			result = gson.toJson(e);
+		}
+		return result;
+	}
+
+	@GET
+	@Path("/getratingquestions/{pupilId}/{teacherId}/{subjectId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getRatingQuestions(@PathParam(value = "pupilId") int pupilId,
+			@PathParam(value = "teacherId") int teacherId,
+			@PathParam(value = "subjectId") int subjectId) throws Exception {
+		Gson gson = new Gson();
+		String result = "";
+
+		try {
+			ResultSet resultSet = SQLHelper.getInstance().getRatingQuestions(
+					pupilId, teacherId, subjectId);
+			result = gson.toJson(resultSet);
+		} catch (Exception e) {
+			result = gson.toJson(e);
+		}
+		return result;
+	}
+
+	@POST
+	@Path("/updaterating/{pupilId}/{teacherId}/{subjectId}/{questionId}/{result}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String updateRating(@PathParam(value = "pupilId") int pupilId,
+			@PathParam(value = "teacherId") int teacherId,
+			@PathParam(value = "subjectId") int subjectId,
+			@PathParam(value = "questionId") int questionId,
+			@PathParam(value = "result") int result) throws Exception {
+		Gson gson = new Gson();
+		String returnResult = "";
+
+		try {
+			SQLHelper.getInstance().updateRating(pupilId, teacherId,
+					questionId, subjectId, result);
+			returnResult = "true";
+		} catch (Exception e) {
+			returnResult = gson.toJson(e);
+		}
+
+		return returnResult;
 	}
 }

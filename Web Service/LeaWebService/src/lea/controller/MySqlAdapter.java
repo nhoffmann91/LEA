@@ -11,7 +11,7 @@ public class MySqlAdapter {
 	private String Username = "root";
 	private String Password = "Passwort";
 	private String Driver = "com.mysql.jdbc.Driver";
-	private String URL = "jdbc:mysql://localhost:3306/bewertung";
+	private String URL = "jdbc:mysql://localhost:3306/db_bewertung";
 	private Connection connection;
 
 	public MySqlAdapter(String user, String pass) throws Exception {
