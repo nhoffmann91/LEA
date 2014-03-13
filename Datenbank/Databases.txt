@@ -1,5 +1,5 @@
 create database db_bewertung; 
-use db_bewertung; 
+use db_bewertung12; 
 
 ## Queries
 ############################################## T_LEHRER ################################################################

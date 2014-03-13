@@ -11,7 +11,7 @@ public class MySqlAdapter {
 	private String Username = "root";
 	private String Password = "Passwort";
 	private String Driver = "com.mysql.jdbc.Driver";
-	private String URL = "jdbc:mysql://localhost:3306/db_bewertung";
+	private String URL = "jdbc:mysql://localhost:3306/db_bewertung12";
 	private Connection connection;
 
 	public MySqlAdapter(String user, String pass) throws Exception {
@@ -20,7 +20,8 @@ public class MySqlAdapter {
 		this.connect();
 	}
 
-	public MySqlAdapter() {
+	public MySqlAdapter() throws Exception {
+		this.connect();
 	}
 
 	public void close() throws Exception {
