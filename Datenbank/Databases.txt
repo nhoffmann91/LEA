@@ -1,4 +1,4 @@
-create database db_bewertung; 
+create database db_bewertung12; 
 use db_bewertung12; 
 
 ## Queries

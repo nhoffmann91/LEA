@@ -7,4 +7,5 @@ public class Constants {
 	public static final String SubjectName = "subjectname";
 	public static final String PupilName = "pupilname";
 	public static final String RatingResults = "ratingresults";
+	public static final String ServiceUrl = "http://localhost:8080/LeaWebService/service";
 }

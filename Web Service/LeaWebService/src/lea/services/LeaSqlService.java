@@ -9,8 +9,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import com.google.gson.Gson;
 
+import lea.helper.ResultConverter;
 import lea.helper.SQLHelper;
 
 @Path("/service")
@@ -43,17 +45,17 @@ public class LeaSqlService {
 	@SuppressWarnings("finally")
 	@GET
 	@Path("/getallteachersbypupil/{pupilId}")
-	@Produces(MediaType.TEXT_PLAIN)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllTeachersByPupil(
 			@PathParam(value = "pupilId") int pupilId) {
 		Gson gson = new Gson();
 		int status = 400;
 		String result = "";
-
+		
 		try {
 			ResultSet resultSet = SQLHelper.getInstance()
 					.getAllTeachersByPupil(pupilId);
-			result = gson.toJson(resultSet, ResultSet.class);
+			result = gson.toJson(ResultConverter.convertToJson(resultSet));
 			status = 200;
 		} catch (Exception e) {
 			result = gson.toJson(e, Exception.class);
@@ -76,7 +78,7 @@ public class LeaSqlService {
 		try {
 			ResultSet resultSet = SQLHelper.getInstance()
 					.getAllSubjectsByPupilAndTeacher(pupilId, teacherId);
-			result = gson.toJson(resultSet, ResultSet.class);
+			result = gson.toJson(ResultConverter.convertToJson(resultSet));
 			status = 200;
 		} catch (Exception e) {
 			result = gson.toJson(e, Exception.class);
@@ -100,7 +102,7 @@ public class LeaSqlService {
 		try {
 			ResultSet resultSet = SQLHelper.getInstance().getRatingQuestions(
 					pupilId, teacherId, subjectId);
-			result = gson.toJson(resultSet, ResultSet.class);
+			result = gson.toJson(ResultConverter.convertToJson(resultSet));
 			status = 200;
 		} catch (Exception e) {
 			result = gson.toJson(e, Exception.class);
