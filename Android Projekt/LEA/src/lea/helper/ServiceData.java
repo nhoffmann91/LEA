@@ -8,7 +8,7 @@ public class ServiceData {
 	public ServiceData() {
 	}
 
-	public static ServiceData getInstance() {
+	public static ServiceData Instance() {
 		if (serviceData == null)
 			serviceData = new ServiceData();
 		return serviceData;
@@ -20,7 +20,7 @@ public class ServiceData {
 	private ResultSet questions;
 
 	public int getPupilId() {
-		return pupilId;
+		return this.pupilId;
 	}
 
 	public void setPupilId(int pupilId) {

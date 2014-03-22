@@ -15,10 +15,18 @@ public class ServiceProvider {
 //		  System.out.println(service.path("rest").path("hello").accept(MediaType.APPLICATION_JSON).post(JSONObject.class, inputJsonObj));
 	}
 
-	public static ServiceProvider getInstance() {
+	public static ServiceProvider Instance() {
 		if (serviceProvider == null)
 			serviceProvider = new ServiceProvider();
 		return serviceProvider;
+	}
+	
+	public int getPupilIdFromService(String firstName, String lastName, String password){
+		return -1;
+	}
+	
+	public ResultSet getTeacherFromService(int pupilId){
+		return null;
 	}
 	
 //	public ResultSet getUser(String userName) throws UniformInterfaceException {

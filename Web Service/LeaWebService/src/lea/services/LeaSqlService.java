@@ -31,7 +31,7 @@ public class LeaSqlService {
 		String result = "";
 
 		try {
-			int id = SQLHelper.getInstance().getPupilId(firstname, lastname,
+			int id = SQLHelper.Instance().getPupilId(firstname, lastname,
 					password);
 			result = gson.toJson(id);
 			status = 200;
@@ -53,7 +53,7 @@ public class LeaSqlService {
 		String result = "";
 		
 		try {
-			ResultSet resultSet = SQLHelper.getInstance()
+			ResultSet resultSet = SQLHelper.Instance()
 					.getAllTeachersByPupil(pupilId);
 			result = gson.toJson(ResultConverter.convertToJson(resultSet));
 			status = 200;
@@ -76,7 +76,7 @@ public class LeaSqlService {
 		String result = "";
 
 		try {
-			ResultSet resultSet = SQLHelper.getInstance()
+			ResultSet resultSet = SQLHelper.Instance()
 					.getAllSubjectsByPupilAndTeacher(pupilId, teacherId);
 			result = gson.toJson(ResultConverter.convertToJson(resultSet));
 			status = 200;
@@ -100,7 +100,7 @@ public class LeaSqlService {
 		String result = "";
 
 		try {
-			ResultSet resultSet = SQLHelper.getInstance().getRatingQuestions(
+			ResultSet resultSet = SQLHelper.Instance().getRatingQuestions(
 					pupilId, teacherId, subjectId);
 			result = gson.toJson(ResultConverter.convertToJson(resultSet));
 			status = 200;
@@ -125,7 +125,7 @@ public class LeaSqlService {
 		int status = 400;
 
 		try {
-			SQLHelper.getInstance().updateRating(pupilId, teacherId,
+			SQLHelper.Instance().updateRating(pupilId, teacherId,
 					questionId, subjectId, result);
 			returnResult = gson.toJson("true", boolean.class);
 		} catch (Exception e) {

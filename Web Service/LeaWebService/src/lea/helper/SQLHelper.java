@@ -12,7 +12,7 @@ public class SQLHelper {
 		this.mySqlAdapter = new MySqlAdapter();
 	}
 
-	public static SQLHelper getInstance() throws Exception {
+	public static SQLHelper Instance() throws Exception {
 		if (sqlHelper == null)
 			sqlHelper = new SQLHelper();
 		return sqlHelper;

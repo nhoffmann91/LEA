@@ -2,6 +2,7 @@ package lea.activities;
 
 import lea.controller.OnClickHandler;
 import lea.controller.OnSelectHandler;
+import lea.helper.Helper;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -22,7 +23,7 @@ public class TeacherChoiceActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v == btnSubmit)
-				OnClickHandler.getInstance().btnSubmitClick(
+				OnClickHandler.Instance().btnSubmitClick(
 						spnTeacher.getSelectedItem().toString(),
 						spnSubject.getSelectedItem().toString(),
 						(Activity) v.getContext());
@@ -34,11 +35,8 @@ public class TeacherChoiceActivity extends Activity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			if (arg1 == spnTeacher) {
-				OnSelectHandler.getInstance().setSubjectsByTeacher();
-			} else if (arg1 == spnSubject) {
-				OnSelectHandler.getInstance().spnSubjectItemChange();
+				spnTeacher.setAdapter(OnSelectHandler.Instance().getSubjectsByTeacher(spnTeacher.getSelectedItem()));
 			}
-
 		}
 
 		@Override
@@ -68,15 +66,14 @@ public class TeacherChoiceActivity extends Activity {
 		this.btnSubmit = (Button) findViewById(R.id.btnSubmit);
 		this.spnTeacher = (Spinner) findViewById(R.id.spinnerTeacher);
 		this.spnSubject = (Spinner) findViewById(R.id.spinnerSubject);
+
+		this.spnSubject.setActivated(false);
 	}
 
 	private void bindData() {
-//		this.spnTeacher.setAdapter(new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, TestData
-//						.getInstance().getTeacherList()));
-//		this.spnSubject.setAdapter(new ArrayAdapter<String>(this,
-//				android.R.layout.simple_dropdown_item_1line, TestData
-//						.getInstance().getSubjectList()));
+		ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this,
+				android.R.layout.simple_spinner_item, Helper.Instance().buildTeacherList());
+		this.spnTeacher.setAdapter(adapter);
 	}
 
 	@Override
