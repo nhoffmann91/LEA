@@ -34,7 +34,7 @@ use db_bewertung;
 
 ############################################## T_FACH ################################################################
  CREATE TABLE t_fach (
-		id INT NOT NULL AUTO_INCREMENT,
+		id INT NOT NULL AUTO_INCREMENT,6
 		kuerzel VARCHAR(45) NOT NULL,
 		bez VARCHAR(45) NOT NULL,
 		PRIMARY KEY (id));
