@@ -1,7 +1,6 @@
 package lea.activities;
 
-import lea.controller.EventHandler;
-import lea.helper.Constants;
+import lea.controller.OnClickHandler;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -9,10 +8,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class LoginActivity extends Activity {
-	
+
 	private Button btnLogin;
 	private EditText editTxtUsername;
 	private EditText editTxtPassword;
@@ -22,7 +20,7 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v == btnLogin)
-				EventHandler.getInstance().btnLoginClick(
+				OnClickHandler.getInstance().btnLoginClick(
 						editTxtUsername.getText().toString(),
 						editTxtPassword.getText().toString(),
 						(Activity) v.getContext());
@@ -33,14 +31,9 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
+
 		this.setViewControls();
 		this.addEvents();
-
-		if (this.getIntent().getExtras().containsKey(Constants.ErrorKey))
-			Toast.makeText(getBaseContext(),
-					this.getIntent().getExtras().getString(Constants.ErrorKey),
-					Toast.LENGTH_LONG).show();
 	}
 
 	@Override
@@ -49,7 +42,7 @@ public class LoginActivity extends Activity {
 		getMenuInflater().inflate(R.menu.login, menu);
 		return true;
 	}
-	
+
 	private void addEvents() {
 		this.btnLogin.setOnClickListener(this.onClickHandler);
 	}

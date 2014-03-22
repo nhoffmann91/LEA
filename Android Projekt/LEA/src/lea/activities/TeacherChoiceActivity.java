@@ -1,12 +1,14 @@
 package lea.activities;
 
-import lea.controller.EventHandler;
+import lea.controller.OnClickHandler;
+import lea.controller.OnSelectHandler;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -15,12 +17,12 @@ public class TeacherChoiceActivity extends Activity {
 	private Spinner spnTeacher;
 	private Spinner spnSubject;
 	private Button btnSubmit;
-	private OnClickListener onClickHandler = new OnClickListener() {
+	private OnClickListener onClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
 			if (v == btnSubmit)
-				EventHandler.getInstance().btnSubmitClick(
+				OnClickHandler.getInstance().btnSubmitClick(
 						spnTeacher.getSelectedItem().toString(),
 						spnSubject.getSelectedItem().toString(),
 						(Activity) v.getContext());
@@ -32,32 +34,32 @@ public class TeacherChoiceActivity extends Activity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			if (arg1 == spnTeacher) {
-				EventHandler.getInstance().spnTeacherItemChange();
+				OnSelectHandler.getInstance().setSubjectsByTeacher();
 			} else if (arg1 == spnSubject) {
-				EventHandler.getInstance().spnSubjectItemChange();
+				OnSelectHandler.getInstance().spnSubjectItemChange();
 			}
 
 		}
-		
+
 		@Override
 		public void onNothingSelected(AdapterView<?> arg0) {
 			// TODO Auto-generated method stub
 
 		}
 	};
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_teacher_choice);
-		
-		this.addEvents();
+
 		this.setViewControls();
+		this.addEvents();
 		this.bindData();
 	}
-	
+
 	private void addEvents() {
-		this.btnSubmit.setOnClickListener(this.onClickHandler);
+		this.btnSubmit.setOnClickListener(this.onClickListener);
 		this.spnTeacher.setOnItemSelectedListener(this.onItemSelectedListener);
 		this.spnSubject.setOnItemSelectedListener(this.onItemSelectedListener);
 	}
@@ -69,7 +71,12 @@ public class TeacherChoiceActivity extends Activity {
 	}
 
 	private void bindData() {
-		//Arra
+//		this.spnTeacher.setAdapter(new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TestData
+//						.getInstance().getTeacherList()));
+//		this.spnSubject.setAdapter(new ArrayAdapter<String>(this,
+//				android.R.layout.simple_dropdown_item_1line, TestData
+//						.getInstance().getSubjectList()));
 	}
 
 	@Override

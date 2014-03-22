@@ -28,4 +28,15 @@
         android:layout_marginBottom="16dp"
         android:text="Anderen Lehrer bewerten" />
 
+    <TableLayout
+        android:id="@+id/tblTeacherOverview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtViewBestTeacher"
+        android:layout_marginRight="18dp"
+        android:layout_marginTop="24dp"
+        android:layout_toLeftOf="@+id/btnRateOtherTeacher" >
+
+    </TableLayout>
+
 </RelativeLayout>
