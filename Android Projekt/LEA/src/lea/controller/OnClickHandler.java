@@ -38,8 +38,7 @@ public class OnClickHandler {
 		try {
 			HttpClient httpClient = new DefaultHttpClient();
 			HttpContext localContext = new BasicHttpContext();
-			HttpGet httpGet = new HttpGet(
-					"http://localhost:8080/LeaWebService/service/getpupilid/nick?hoffmann?87654321");
+			HttpGet httpGet = new HttpGet("http://192.168.178.35:8080/LeaWebService/service/getpupilid/nick?hoffmann?87654321");
 			String text = null;
 
 			HttpResponse response = httpClient.execute(httpGet, localContext);
@@ -50,14 +49,14 @@ public class OnClickHandler {
 			int id = gson.fromJson(entity.toString(), int.class);
 
 			// Create new intent
-			Intent ranking = new Intent(context.getApplicationContext(),
-					RankingActivity.class);
+			Intent ranking = new Intent(context.getApplicationContext(), RankingActivity.class);
 
 			// Start intent and change to ranking activity
 			context.startActivity(ranking);
 		} catch (Exception e) {
 			// Show toast with error message
 			Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+			
 		}
 	}
 
