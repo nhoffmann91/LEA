@@ -10,7 +10,7 @@ public class OnLoadHandler {
 	public OnLoadHandler() {
 	}
 
-	public static OnLoadHandler getInstance() {
+	public static OnLoadHandler Instance() {
 		if (onLoadHandler == null)
 			onLoadHandler = new OnLoadHandler();
 		return onLoadHandler;

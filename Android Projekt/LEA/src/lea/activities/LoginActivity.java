@@ -20,7 +20,7 @@ public class LoginActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v == btnLogin)
-				OnClickHandler.getInstance().btnLoginClick(
+				OnClickHandler.Instance().btnLoginClick(
 						editTxtUsername.getText().toString(),
 						editTxtPassword.getText().toString(),
 						(Activity) v.getContext());

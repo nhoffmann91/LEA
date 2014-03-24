@@ -19,7 +19,7 @@ public class RankingActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v == btnRateOtherTeacher)
-				OnClickHandler.getInstance().btnRateOtherTeacherClick(
+				OnClickHandler.Instance().btnRateOtherTeacherClick(
 						(Activity) v.getContext());
 		}
 	};
@@ -35,7 +35,7 @@ public class RankingActivity extends Activity {
 	}
 
 	private void loadTeacherOverview() {
-		this.tblTeacherOverview.addTouchables(OnLoadHandler.getInstance()
+		this.tblTeacherOverview.addTouchables(OnLoadHandler.Instance()
 				.getTeacherOverview(this));
 	}
 

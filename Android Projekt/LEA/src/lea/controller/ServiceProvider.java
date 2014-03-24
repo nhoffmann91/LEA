@@ -16,10 +16,15 @@ public class ServiceProvider {
 =======
 import java.sql.ResultSet;
 
+import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.client.ClientConfig;
+
 public class ServiceProvider {
 	private static ServiceProvider serviceProvider = null;
 	
 	public ServiceProvider() {
+<<<<<<< HEAD
 //		ClientConfig config = new DefaultClientConfig();
 //		  Client client = Client.create(config);
 //		  client.addFilter(new LoggingFilter());
@@ -28,17 +33,38 @@ public class ServiceProvider {
 //		  inputJsonObj.put("input", "Value");
 //		  System.out.println(service.path("rest").path("hello").accept(MediaType.APPLICATION_JSON).post(JSONObject.class, inputJsonObj));
 >>>>>>> origin/branch_1
+=======
+//		WebResource s1 = Client.create().resource( "http://localhost:8080/rest" );
+//		Builder sb1 = s1.path( "message" ).path( "serverinfo" )
+//		                                  .accept( MediaType.APPLICATION_JSON );
+//		System.out.println( sb1.get( ServerInfo.class ).server );  // Windows Vista 6.0
+>>>>>>> origin/branch_1
 	}
 
-	public static ServiceProvider getInstance() {
+	public static ServiceProvider Instance() {
 		if (serviceProvider == null)
 			serviceProvider = new ServiceProvider();
 		return serviceProvider;
 	}
 	
 <<<<<<< HEAD
+<<<<<<< HEAD
 	
 =======
+=======
+	public int getPupilIdFromService(String firstName, String lastName, String password){
+		return -1;
+	}
+	
+	public ResultSet getTeacherFromService(int pupilId){
+		return null;
+	}
+	
+	public ResultSet getSubjectsFromService(int pupilId, int teacherId){
+		return null;
+	}
+	
+>>>>>>> origin/branch_1
 //	public ResultSet getUser(String userName) throws UniformInterfaceException {
 //        final WebResource userResource = webResource
 //           .path(String.format("/user/%s", userName))
