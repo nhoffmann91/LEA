@@ -2,17 +2,18 @@ package lea.controller;
 
 import java.sql.ResultSet;
 
+import javax.ws.rs.core.MediaType;
+
+import org.glassfish.jersey.client.ClientConfig;
+
 public class ServiceProvider {
 	private static ServiceProvider serviceProvider = null;
 	
 	public ServiceProvider() {
-//		ClientConfig config = new DefaultClientConfig();
-//		  Client client = Client.create(config);
-//		  client.addFilter(new LoggingFilter());
-//		  WebResource service = client.resource(getBaseURI());
-//		  JSONObject inputJsonObj = new JSONObject();
-//		  inputJsonObj.put("input", "Value");
-//		  System.out.println(service.path("rest").path("hello").accept(MediaType.APPLICATION_JSON).post(JSONObject.class, inputJsonObj));
+//		WebResource s1 = Client.create().resource( "http://localhost:8080/rest" );
+//		Builder sb1 = s1.path( "message" ).path( "serverinfo" )
+//		                                  .accept( MediaType.APPLICATION_JSON );
+//		System.out.println( sb1.get( ServerInfo.class ).server );  // Windows Vista 6.0
 	}
 
 	public static ServiceProvider Instance() {
@@ -26,6 +27,10 @@ public class ServiceProvider {
 	}
 	
 	public ResultSet getTeacherFromService(int pupilId){
+		return null;
+	}
+	
+	public ResultSet getSubjectsFromService(int pupilId, int teacherId){
 		return null;
 	}
 	

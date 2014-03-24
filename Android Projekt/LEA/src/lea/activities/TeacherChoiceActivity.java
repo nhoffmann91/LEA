@@ -3,6 +3,7 @@ package lea.activities;
 import lea.controller.OnClickHandler;
 import lea.controller.OnSelectHandler;
 import lea.helper.Helper;
+import lea.helper.ServiceData.DataObject;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -23,10 +24,7 @@ public class TeacherChoiceActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (v == btnSubmit)
-				OnClickHandler.Instance().btnSubmitClick(
-						spnTeacher.getSelectedItem().toString(),
-						spnSubject.getSelectedItem().toString(),
-						(Activity) v.getContext());
+				OnClickHandler.Instance().btnSubmitClick((Activity) v.getContext());
 		}
 	};
 	private OnItemSelectedListener onItemSelectedListener = new OnItemSelectedListener() {
@@ -35,7 +33,14 @@ public class TeacherChoiceActivity extends Activity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			if (arg1 == spnTeacher) {
-				spnTeacher.setAdapter(OnSelectHandler.Instance().getSubjectsByTeacher(spnTeacher.getSelectedItem()));
+				spnSubject
+						.setAdapter(OnSelectHandler.Instance()
+								.getSubjectsByTeacher(
+										(DataObject) spnTeacher
+												.getSelectedItem(), (Activity)arg1.getContext()));
+			}
+			else if(arg1 == spnSubject){
+				OnSelectHandler.Instance().setSubjectFromSpinner((DataObject)spnSubject.getSelectedItem());
 			}
 		}
 
@@ -72,7 +77,8 @@ public class TeacherChoiceActivity extends Activity {
 
 	private void bindData() {
 		ArrayAdapter<Object> adapter = new ArrayAdapter<Object>(this,
-				android.R.layout.simple_spinner_item, Helper.Instance().buildTeacherList());
+				android.R.layout.simple_spinner_item, Helper.Instance()
+						.buildTeacherList());
 		this.spnTeacher.setAdapter(adapter);
 	}
 
