@@ -1,21 +1,18 @@
 package lea.controller;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.BasicHttpContext;
-import org.apache.http.protocol.HttpContext;
-
-import com.google.gson.Gson;
+import java.util.ArrayList;
 
 import lea.activities.RankingActivity;
 import lea.activities.RatingActivity;
 import lea.activities.TeacherChoiceActivity;
+import lea.helper.Constant;
+import lea.helper.Helper;
 import lea.helper.ServiceData;
+import lea.helper.ServiceObject;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.provider.SyncStateContract.Constants;
 import android.widget.Toast;
 
 public class OnClickHandler {
@@ -36,9 +33,8 @@ public class OnClickHandler {
 		// Split usernname into lastname and firstname
 		try {
 			String[] login = username.split(".");
-			ServiceData.Instance().setPupilId(
-					ServiceProvider.Instance().getPupilIdFromService(login[1],
-							login[0], password));
+			Helper.pupil = new ServiceObject(ServiceProvider.Instance()
+					.getPupilIdFromService(login[1], login[0], password));
 
 			Intent ranking = new Intent(context.getApplicationContext(),
 					RankingActivity.class);
@@ -60,10 +56,57 @@ public class OnClickHandler {
 		context.startActivity(otherTeacher);
 	}
 
-	public void btnSubmitClick(Activity context) {
+	public void btnRateClick(Activity context) {
+		Helper.ratingCounter = 1;
 		Intent rating = new Intent(context.getApplicationContext(),
 				RatingActivity.class);
-		
+		this.putRatingExtras(rating);
+
 		context.startActivity(rating);
+	}
+
+	private void putRatingExtras(Intent intent) {
+		intent.putExtra(Constant.QuestionNameKey,
+				Helper.questions.get(Helper.ratingCounter - 1).getName());
+		intent.putExtra(Constant.TeacherNameKey,
+				Helper.selectedTeacher.getName());
+		intent.putExtra(Constant.SubjectNameKey,
+				Helper.selectedSubject.getName());
+	}
+
+	public void btnSubmitClick(float rating, Activity context) {
+		if (Helper.ratingCounter < 6) {
+			if (Helper.results == null) {
+				Helper.results = new ArrayList<ServiceData>();
+			}
+
+			Helper.results.add(new ServiceData(Helper.pupil.getId(),
+					Helper.selectedTeacher.getId(), Helper.selectedSubject
+							.getId(), Helper.questions.get(
+							Helper.ratingCounter - 1).getId(), rating));
+
+			Helper.ratingCounter++;
+
+			Intent intent = new Intent(context.getApplicationContext(),
+					RatingActivity.class);
+			this.putRatingExtras(intent);
+
+			context.startActivity(intent);
+		} else {
+			if (ServiceProvider.Instance().updateService(Helper.results)) {
+				Intent ranking = new Intent(context, RankingActivity.class);
+				context.startActivity(ranking);
+			} else {
+				Intent ranking = new Intent(context, RankingActivity.class);
+				ranking.putExtra(Constant.ErrorKey,
+						"Etwas ist schief gelaufen!");
+				context.startActivity(ranking);
+			}
+		}
+	}
+
+	public void btnCancelClick(Activity context) {
+		Intent ranking = new Intent(context, RankingActivity.class);
+		context.startActivity(ranking);
 	}
 }

@@ -1,7 +1,7 @@
 package lea.activities;
 
 import lea.controller.OnClickHandler;
-import lea.controller.OnLoadHandler;
+import lea.helper.Constant;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TableLayout;
+import android.widget.Toast;
 
 public class RankingActivity extends Activity {
 	private Button btnRateOtherTeacher;
@@ -31,12 +32,18 @@ public class RankingActivity extends Activity {
 
 		this.setViewControls();
 		this.addEvents();
-		//this.loadTeacherOverview();
+
+		try {
+			Toast.makeText(this.getApplicationContext(), this.getIntent()
+					.getStringExtra(Constant.ErrorKey), Toast.LENGTH_LONG);
+		} catch (Exception e) {
+
+		}
 	}
 
 	private void loadTeacherOverview() {
-		this.tblTeacherOverview.addTouchables(OnLoadHandler.Instance()
-				.getTeacherOverview(this));
+		// this.tblTeacherOverview.addTouchables(OnLoadHandler.Instance()
+		// .getTeacherOverview(this));
 	}
 
 	private void addEvents() {

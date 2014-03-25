@@ -4,8 +4,7 @@ import android.app.Activity;
 import android.widget.ArrayAdapter;
 import android.widget.SpinnerAdapter;
 import lea.helper.Helper;
-import lea.helper.ServiceData;
-import lea.helper.ServiceData.DataObject;
+import lea.helper.ServiceObject;
 
 public class OnSelectHandler {
 	private static OnSelectHandler onSelectHandler = null;
@@ -19,24 +18,24 @@ public class OnSelectHandler {
 		return onSelectHandler;
 	}
 
-	public SpinnerAdapter getSubjectsByTeacher(DataObject selectedTeacher, Activity context) {
+	public SpinnerAdapter getSubjectsByTeacher(ServiceObject selectedTeacher,
+			Activity context) {
 		try {
-			ServiceData.Instance().setTeacher(selectedTeacher);
-			
-			ServiceData.Instance().setSubjectSet(
-					ServiceProvider.Instance().getSubjectsFromService(
-							ServiceData.Instance().getPupilId(),
-							selectedTeacher.getId()));
+
+			Helper.subjects = ServiceProvider.Instance()
+					.getSubjectsFromService(Helper.pupil.getId(),
+							selectedTeacher.getId());
+			Helper.selectedTeacher = selectedTeacher;
 
 			return new ArrayAdapter<Object>(context.getApplicationContext(),
 					android.R.layout.simple_spinner_item, Helper.Instance()
-							.buildTeacherList());
+							.buildSubjectList());
 		} catch (Exception e) {
 			return null;
 		}
 	}
 
-	public void setSubjectFromSpinner(DataObject selectedItem) {
-		ServiceData.Instance().setSubject(selectedItem);
+	public void setSubjectFromSpinner(ServiceObject selectedItem) {
+		Helper.selectedSubject = selectedItem;
 	}
 }

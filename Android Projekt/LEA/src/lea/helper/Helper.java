@@ -1,12 +1,19 @@
 package lea.helper;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 import lea.controller.ServiceProvider;
 
 public class Helper {
+	public static int ratingCounter;
+	public static ServiceObject pupil;
+	public static List<ServiceObject> teacher;
+	public static List<ServiceObject> subjects;
+	public static List<ServiceObject> questions;
+	public static List<ServiceData> results;
+	public static ServiceObject selectedTeacher;
+	public static ServiceObject selectedSubject;
 	private static Helper helper = null;
 
 	public Helper() {
@@ -23,19 +30,11 @@ public class Helper {
 		List<Object> teacherList = new ArrayList<Object>();
 
 		try {
-			ResultSet teacherSet;
-			if (ServiceData.Instance().getTeacher() == null
-					&& ServiceData.Instance().getPupilId() != -1) {
-				teacherSet = ServiceProvider.Instance().getTeacherFromService(
-						ServiceData.Instance().getPupilId());
-			} else {
-				teacherSet = ServiceData.Instance().getTeacherSet();
-			}
+			teacher = ServiceProvider.Instance().getTeacherFromService(
+					pupil.getId());
 
-			while (teacherSet.next()) {
-				teacherList.add(ServiceData.Instance().new DataObject(
-						teacherSet.getInt("id"), teacherSet.getString("vname")
-								+ " " + teacherSet.getString("nname")));
+			for (int i = 0; i < teacher.size(); i++) {
+				teacherList.add(teacher.get(i));
 			}
 		} catch (Exception e) {
 			teacherList = null;
@@ -49,19 +48,10 @@ public class Helper {
 		List<Object> subjectList = new ArrayList<Object>();
 
 		try {
-			ResultSet subjectSet;
-			if (ServiceData.Instance().getSubjectSet() == null) {
-				subjectSet = ServiceProvider.Instance().getSubjectsFromService(
-						ServiceData.Instance().getPupilId(),
-						ServiceData.Instance().getTeacher().getId());
-			} else {
-				subjectSet = ServiceData.Instance().getSubjectSet();
-			}
-
-			while (subjectSet.next()) {
-				subjectList
-						.add(ServiceData.Instance().new DataObject(subjectSet
-								.getInt("id"), subjectSet.getString("fname")));
+			subjects = ServiceProvider.Instance().getSubjectsFromService(
+					pupil.getId(), selectedTeacher.getId());
+			for (int i = 0; i < subjects.size(); i++) {
+				subjectList.add(subjects.get(i));
 			}
 		} catch (Exception e) {
 			subjectList = null;

@@ -3,7 +3,7 @@ package lea.activities;
 import lea.controller.OnClickHandler;
 import lea.controller.OnSelectHandler;
 import lea.helper.Helper;
-import lea.helper.ServiceData.DataObject;
+import lea.helper.ServiceObject;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -18,13 +18,14 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class TeacherChoiceActivity extends Activity {
 	private Spinner spnTeacher;
 	private Spinner spnSubject;
-	private Button btnSubmit;
+	private Button btnRate;
 	private OnClickListener onClickListener = new OnClickListener() {
 
 		@Override
 		public void onClick(View v) {
-			if (v == btnSubmit)
-				OnClickHandler.Instance().btnSubmitClick((Activity) v.getContext());
+			if (v == btnRate)
+				OnClickHandler.Instance().btnRateClick(
+						(Activity) v.getContext());
 		}
 	};
 	private OnItemSelectedListener onItemSelectedListener = new OnItemSelectedListener() {
@@ -33,14 +34,13 @@ public class TeacherChoiceActivity extends Activity {
 		public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2,
 				long arg3) {
 			if (arg1 == spnTeacher) {
-				spnSubject
-						.setAdapter(OnSelectHandler.Instance()
-								.getSubjectsByTeacher(
-										(DataObject) spnTeacher
-												.getSelectedItem(), (Activity)arg1.getContext()));
-			}
-			else if(arg1 == spnSubject){
-				OnSelectHandler.Instance().setSubjectFromSpinner((DataObject)spnSubject.getSelectedItem());
+				spnSubject.setAdapter(OnSelectHandler.Instance()
+						.getSubjectsByTeacher(
+								(ServiceObject) spnTeacher.getSelectedItem(),
+								(Activity) arg1.getContext()));
+			} else if (arg1 == spnSubject) {
+				OnSelectHandler.Instance().setSubjectFromSpinner(
+						(ServiceObject) spnSubject.getSelectedItem());
 			}
 		}
 
@@ -62,13 +62,13 @@ public class TeacherChoiceActivity extends Activity {
 	}
 
 	private void addEvents() {
-		this.btnSubmit.setOnClickListener(this.onClickListener);
+		this.btnRate.setOnClickListener(this.onClickListener);
 		this.spnTeacher.setOnItemSelectedListener(this.onItemSelectedListener);
 		this.spnSubject.setOnItemSelectedListener(this.onItemSelectedListener);
 	}
 
 	private void setViewControls() {
-		this.btnSubmit = (Button) findViewById(R.id.btnSubmit);
+		this.btnRate = (Button) findViewById(R.id.btnRate);
 		this.spnTeacher = (Spinner) findViewById(R.id.spinnerTeacher);
 		this.spnSubject = (Spinner) findViewById(R.id.spinnerSubject);
 
