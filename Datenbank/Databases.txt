@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 create database db_bewertung; 
-=======
-create database db_bewertung12; 
->>>>>>> origin/branch_1
-use db_bewertung12; 
+use db_bewertung; 
 
 ## Queries
 ############################################## T_LEHRER ################################################################
@@ -60,7 +56,7 @@ CREATE TABLE t_fragenkatalog (
 		PRIMARY KEY (id));
 
 	INSERT INTO t_fragenkatalog (frage) VALUES ('Wie gut wurde ihrer Meinung nach der Stoff vermittelt?');
-	INSERT INTO t_fragenkatalog (frage) VALUES ('Fanden sie den Stoff Zeitgemäß?');
+	INSERT INTO t_fragenkatalog (frage) VALUES ('Fanden sie den Stoff up to Date?');
 	INSERT INTO t_fragenkatalog (frage) VALUES ('War der Unterricht abwechslungsreich?');
 	INSERT INTO t_fragenkatalog (frage) VALUES ('Wurden Fragen zufiedenstellend beantwortet?');
 
@@ -84,50 +80,58 @@ CREATE TABLE t_klasse (
 	fk_klasse INT NOT NULL,
 	fk_lehrer INT NOT NULL,
 	fk_schueler INT NOT NULL,
-	ergebnis INT,
-	PRIMARY KEY (id),
-	INDEX fk_schueler_idx (fk_schueler ASC),
-	INDEX fk_lehrer_idx (fk_lehrer ASC),
-	INDEX fk_fragenkatalog_idx (fk_fragenkatalog ASC),
-	INDEX fk_fach_idx (fk_fach ASC),
-	INDEX fk_klasse_idx (fk_klasse ASC),
-	CONSTRAINT fk_schueler  FOREIGN KEY (fk_schueler)
-    REFERENCES t_schueler(id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-	CONSTRAINT fk_lehrer    FOREIGN KEY (fk_lehrer)
-    REFERENCES t_lehrer (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-	CONSTRAINT fk_fragenkatalog
-    FOREIGN KEY (fk_fragenkatalog)
-    REFERENCES t_fragenkatalog (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-	CONSTRAINT fk_fach
-    FOREIGN KEY (fk_fach)
-    REFERENCES t_fach (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-	CONSTRAINT fk_klasse
-    FOREIGN KEY (fk_klasse)
-    REFERENCES t_klasse (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
+	ergebnis DOUBLE,
+	PRIMARY KEY (id));
 
-
+	# AEP =1 Eiermann = 1
 	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,1,1,1,1);
 	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,2,1,1,1);
 	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,3,1,1,1);
-	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,3,1,1,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,4,1,1,1);
+	# ITS= 2 Wittstock = 2
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,1,1,2,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,2,1,2,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,3,1,2,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,4,1,2,1);
+	# AEP = 1  Pfleiderer = 4 
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,1,1,4,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,2,1,4,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,3,1,4,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (1,4,1,4,1);
+	# Englisch = 4 Hilz = 8
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (4,1,1,8,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (4,2,1,8,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (4,3,1,8,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (4,4,1,8,1);
+	# Sport = 5 Herren= 9
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (5,1,1,9,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (5,2,1,9,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (5,3,1,9,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (5,4,1,9,1);
+	# Sozi = 6 Pröbstl = 5
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (6,1,1,5,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (6,2,1,5,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (6,3,1,5,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (6,4,1,5,1);
+	# ITS = 2 Wiedorn = 6
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,1,1,6,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,2,1,6,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,3,1,6,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (2,4,1,6,1);
+	# BWP = 8 Heigl=3
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (8,1,1,3,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (8,2,1,3,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (8,3,1,3,1);
+	INSERT INTO t_ergebnis (fk_fach, fk_fragenkatalog, fk_klasse, fk_lehrer, fk_schueler) VALUES (8,4,1,3,1);
+
 
 
 ## select schueler für den login vergleich 
 #select id, vname, nname, passwort from t_schueler; 
 
 ## gibt alle Lehrer zurück die dieser Schühler hat (WHERE PART Schüler ID) 
-select distinct l.id, l.vname, l.nname 
-from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id where s.id = 1; 
+#select distinct l.id, l.vname, l.nname 
+#from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id where s.id = 1; 
 
 ## gibt alle Fächer aus die dieser Leher bei einem gewissen Schüler unterrichtet
 #select distinct f.id, f.kuerzel from t_ergebnis join t_schueler s on fk_schueler = s.id join t_lehrer l on fk_lehrer = l.id join t_fach f on fk_fach = f.id where s.id = 1 and l.id=1; 
